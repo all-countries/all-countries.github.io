@@ -1,3 +1,18 @@
+// Fisher-Yates shuffle from https://gist.github.com/smutnyleszek/9bbb7f75464fbbea87f0
+function shuffle(array) {
+    var m = array.length, t, i;
+    // while there remain elements to shuffle
+    while (m) {
+        // pick a remaining element
+        i = Math.floor(Math.random() * m--);
+        // and swap it with the current element
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+    }
+    return array;
+}
+
 $(function() {
     // get days
     // div & mod by 196
@@ -12,10 +27,12 @@ $(function() {
 
     var quotient = parseInt(fullDaysSinceEpoch / 196);
     var mod = parseInt(fullDaysSinceEpoch % 196);
+    
+    Math.seedrandom(quotient);
 
-    alert(quotient);
-    alert(mod);
+    var shuffledCountries = shuffle(countries);
 
+    var country = shuffledCountries[mod];
 
-    $("#country").html("United States");
+    $("#country").html(country);
 });
